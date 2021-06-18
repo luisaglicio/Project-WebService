@@ -1,15 +1,22 @@
 package com.mywebservice.project.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //anotação para instruir meu JPA como ele deve converter os objetos para o modelo relascional
-
+//anotação Table para que o o nome Order nao entre enconflito com o SQL
 @Entity
+@Table(name = "tb_user")
 public class User implements Serializable{
 		
 	private static final long serialVersionUID = 1L;
@@ -24,6 +31,12 @@ public class User implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
+	
+	//Antação JsonIgnore pois sem ele ocorre um loop infinito no Postman entre usuários e pedidos
+	//Anotação para eu poder busrcar os pedidos por cliente (muitos para 1)
+	@JsonIgnore
+	@OneToMany(mappedBy = "client")
+	private List<Order> orders = new ArrayList<>();
 	
 	public User() {
 		
@@ -78,6 +91,10 @@ public class User implements Serializable{
 		this.password = password;
 	}
 	
+	public List<Order> getOrders() {
+		return orders;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -103,6 +120,8 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
+
+	
 
 
 
