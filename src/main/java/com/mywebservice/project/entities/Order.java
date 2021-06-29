@@ -28,8 +28,8 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	// Anotação feita para formatar o Json
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	// Anotação feita para formatar a data Json
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "Brazil/East")
 	private Instant moment;
 
 	private Integer orderStatus;
